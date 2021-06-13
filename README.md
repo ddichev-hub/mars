@@ -1,5 +1,8 @@
 # mars
 The project includes different tools to help with lab automation.
+- __backup__ - backup/restore device configuration to/from remote server or locally on device. 
+               Filename consist of <device_name>_<file_suffix> . This allows to take backup/restore in different stages of configuration.
+
 
 
 ### To setup your environment:
