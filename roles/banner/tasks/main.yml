@@ -1,0 +1,11 @@
+---
+# tasks file for banner
+- include: banner_10x.yml 
+  when: (ansible_network_os == "saos10x") 
+
+- include: banner_8x.yml 
+  when: (ansible_network_os == "saos8x")
+
+- include: banner_{{saos_os}}_get.yml
+  when: (ansible_network_os == "saos10x") and crud == 'get'
+

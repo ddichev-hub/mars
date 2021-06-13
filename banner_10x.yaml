@@ -1,0 +1,17 @@
+---
+# to execute 
+# ansible-playbook -i inventory/inventory_file banner_10x.yaml -e "crud=create" --skip-tags debug
+# ansible-playbook -i inventory/inventory_file banner_10x.yaml -e "crud=delete" --skip-tags debug
+# ansible-playbook -i inventory/inventory_file banner_10x.yaml -e "crud=get"  --skip-tags debug
+
+- hosts: devices_10x
+  gather_facts: no
+  connection: netconf
+  vars: 
+    saos_os: "10x"
+    ansible_network_os: "saos10x"    
+
+  tasks:
+    - import_role:
+        name: banner
+
