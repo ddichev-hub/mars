@@ -6,13 +6,13 @@ The project includes different tools to help with lab automation.
 
 
 ### To setup your environment:
-
-> git clone https://github.com/ddichev-hub/mars.git
-> cd mars
-> python3 -m venv venv  (optional)
-> activate venv/bin/activate  (optional if you prefer to use virtual environment)
-> pip install -r requirements.txt
-
+```bash
+git clone https://github.com/ddichev-hub/mars.git
+cd mars
+python3 -m venv venv  (optional)
+activate venv/bin/activate  (optional if you prefer to use virtual environment)
+pip install -r requirements.txt
+```
 
 
 ### __Executing playbook__
