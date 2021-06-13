@@ -1,0 +1,60 @@
+all:
+    vars:
+      project_name: S3_LAB
+      ansible_python_interpreter: "venv/bin/python3"
+      dns_servers: ["192.0.2.100"]
+      ntp_servers: ["192.0.2.100"]
+      #License server is valid entry only for 10x, WS, 6500, RLS, MCP
+      license_server: ["192.0.2.100"]
+      banner:
+        - "########################################################################"
+        - "##########                                                    ##########"
+        - "##########                                                    ##########"
+        - "##########             !!!!!!!!!! WARNING !!!!!!!!!!          ##########"
+        - "##########                                                    ##########"
+        - "##########      This equipment is in use                      ##########"
+        - "##########      Lab TESTINH                                   ##########"
+        - "##########      5/2021                                        ##########"
+        - "##########                                                    ##########"
+        - "##########                                                    ##########"
+        - "########################################################################"
+      servers:
+        #Server to upload/download config files. Tested only with sftp.
+        - ip: "192.0.2.100"
+          root_dir: "home/user/lab-automation/{{project_name}}"
+    
+          xftp: "sftp"
+          user: "user"
+          password: "user123"
+    children:   
+        devices:
+          children:
+            devices_6x:
+              vars:
+                ansible_user: "user"
+                ansible_password: "user123"
+              hosts:
+                D3926_2:
+                  ansible_ssh_host: "192.0.2.102"
+                D3926_1:
+                  ansible_ssh_host: "192.0.2.101"
+                D3926_2_Combo:
+                  ansible_ssh_host: "192.0.2.103"
+                D3926_1_Combo:
+                  ansible_ssh_host: "192.0.2.104"
+            devices_8x:
+              vars:
+                ansible_user: "user"
+                ansible_password: "user213"
+              hosts:
+                D5170_121:
+                  ansible_ssh_host: "192.0.2.121"
+                D5170_120:
+                  ansible_ssh_host: "192.0.2.120"
+            devices_10x:
+              vars:
+                ansible_user: "user"
+                ansible_password: "user123"
+              hosts:
+                D5164_19:
+                  ansible_ssh_host: "192.0.2.119"               
