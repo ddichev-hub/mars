@@ -1,0 +1,9 @@
+- hosts: devices
+  gather_facts: no
+
+- import_playbook: banner_10x.yaml
+  when: ansible_network_os == "saos10x" 
+#- import_playbook: banner_6x.yaml
+#  when: ansible_network_os == "saos6x" 
+- import_playbook: banner_8x.yaml
+  when: ansible_network_os == "saos8x" 
