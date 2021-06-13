@@ -6,6 +6,8 @@
   when: ansible_network_os == "saos8x"
   
 - name: "TASK: Print output"
+  tags:
+     - debug
   debug:
     msg: "{{ cli_result }}"
   when: ansible_network_os == "saos8x"
