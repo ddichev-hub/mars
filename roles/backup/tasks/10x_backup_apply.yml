@@ -1,0 +1,78 @@
+---
+- name: "Download configuration file from a server"
+  netconf_rpc:
+    display: json
+    rpc: transfer-config
+    xmlns: "http://www.ciena.com/ns/yang/ciena-packet-configuration"
+    content: "{{ lookup('template', './{{ saos_os }}_backup_download.j2') }}"
+  register: nc_result
+  when: ansible_network_os == "saos10x" and crud == 'apply'
+  tags: 
+  - remote
+
+- name: "Initiate RTUC "
+  netconf_rpc:
+    display: json
+    rpc: reset-to-user-config
+    xmlns: "http://www.ciena.com/ns/yang/ciena-system"
+    content: "{{ lookup('template', './{{ saos_os }}_backup_restore.j2') }}"
+  register: nc_result
+  when: ansible_network_os == "saos10x" and crud == 'apply'
+  tags:
+  - local
+  - remote
+
+- name: "Reset the connection"
+  meta: reset_connection
+#  tags:
+#    - wait
+#    - local
+#    - remote
+    
+
+- name: "Wait for device to restart"
+  tags:
+    - wait
+    - local
+    - remote
+  wait_for_connection:
+    sleep: 20
+    delay: 60
+    timeout: 600
+    connect_timeout: 5
+  when: ansible_network_os == "saos10x" and crud == 'apply'
+
+- name: "Wait for RTUC to complete"
+  tags:
+    - wait
+    - local
+    - remote
+  netconf_rpc:
+    display: json
+    rpc: get
+    content: "{{ lookup('template', './{{ saos_os }}_rtuc_get_status.j2') }}"
+  register: nc_result
+  until: 
+    - nc_result.output is defined 
+    - nc_result.output['rpc-reply']['data']['reset-to-user-config-status'].status is match("rtuc-complete") 
+  delay: 20
+  retries: 100
+  when: ansible_network_os == "saos10x" and crud == 'apply'
+
+#- name: "TEST123"
+#  tags:
+#    - test123
+#  netconf_rpc:
+#    display: json
+#    rpc: get
+#    content: "{{ lookup('template', './{{ saos_os }}_rtuc_get_status.j2') }}"
+#  register: nc_result
+#  when: ansible_network_os == "saos10x" and crud == 'apply'
+#
+#
+#- name: "Print output"
+#  tags:
+#     - test123
+#  debug:
+#    msg: "{{ nc_result.output['rpc-reply']['data']['reset-to-user-config-status'].status }}"
+#  when: ansible_network_os == "saos10x" and crud == "apply"

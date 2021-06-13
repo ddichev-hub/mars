@@ -1,0 +1,3 @@
+{% for server in servers %}
+configuration reset-to-user-config filename  {{inventory_hostname}}_{{file_suffix}}.cfg
+{% endfor %}

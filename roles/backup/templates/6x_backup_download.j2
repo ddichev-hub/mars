@@ -1,0 +1,3 @@
+{% for server in servers %}
+configuration install {{server.xftp}}-server {{server.ip}} login-id {{server.user}} password {{server.password}} filename  /{{server.root_dir}}/{{inventory_hostname}}_{{file_suffix}}.cfg
+{% endfor %}

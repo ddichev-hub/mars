@@ -1,0 +1,10 @@
+{% for server in servers %}
+{#
+<filename>backup_{{ tstamp.stdout_lines[0] }}_{{ansible_host}}.xml</filename>
+#}
+<filename>{{inventory_hostname}}_{{file_suffix}}.xml</filename>
+<action>download</action>
+<url>{{ server.xftp }}://{{ server.ip }}:/{{server.root_dir}}/{{inventory_hostname}}_{{file_suffix}}.xml</url>
+<username>{{ server.user }}</username>
+<password>{{ server.password }}</password>
+{% endfor %}
