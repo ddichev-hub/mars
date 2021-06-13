@@ -1,0 +1,8 @@
+
+{% for line in banner %}
+  {% if loop.index == 1 %}
+    system shell banner create banner login line "{{ line }}"
+  {% else %}
+    system shell banner add banner login line "{{ line }}"
+  {% endif %}
+{% endfor %}
