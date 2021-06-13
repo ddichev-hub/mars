@@ -1,0 +1,25 @@
+---
+# tasks file for backup
+- include: 10x_backup.yml 
+  when: (ansible_network_os == "saos10x") and (crud == 'create' or crud == 'delete')
+
+- include: 10x_backup_apply.yml 
+  when: (ansible_network_os == "saos10x") and (crud == 'apply')
+
+
+- include: 8x_backup.yml 
+  when: (ansible_network_os == "saos8x") and (crud == 'create' or crud == 'delete')
+
+- include: 8x_backup_apply.yml 
+  when: (ansible_network_os == "saos8x") and (crud == 'apply')
+
+
+- include: 6x_backup.yml 
+  when: (ansible_network_os == "saos6x") and (crud == 'create' or crud == 'delete')
+
+- include: 6x_backup_apply.yml 
+  when: (ansible_network_os == "saos6x") and (crud == 'apply')
+
+#- include: {{saos_os}}_backup_get.yml
+#  when: (ansible_network_os == "saos10x") and crud == 'get'
+

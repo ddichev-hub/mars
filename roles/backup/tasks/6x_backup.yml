@@ -1,0 +1,34 @@
+---
+- name: "create backup"
+  cli_command:
+    command: "{{ lookup('template', './{{saos_os}}_backup_{{crud}}.j2') }}"
+  register: cli_result
+  ignore_errors: yes
+  when: ansible_network_os == "saos6x" and crud == 'create'
+  tags: 
+   - remote
+   - local
+
+- name: "delete backup"
+  cli_command:
+    command: "{{ lookup('template', './{{ saos_os }}_backup_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos6x" and crud == 'delete'
+  tags: 
+   - remote
+   - local
+
+- name: "Print output"
+  tags:
+     - debug
+  debug:
+    msg: "{{ cli_result }}"
+  when: ansible_network_os == "saos6x" and (crud == 'create' or crud == 'delete')
+
+- name: "Upload config backup to a server"
+  cli_command:
+    command: "{{ lookup('template', './{{ saos_os }}_backup_upload.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos6x" and crud == 'create'
+  tags: 
+  - remote

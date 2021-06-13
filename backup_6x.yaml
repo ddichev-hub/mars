@@ -1,0 +1,20 @@
+---
+# to execute 
+#ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=create file_suffix=test123" -t [remote|local] --skip-tags delete-local,debug
+#ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=create file_suffix=test123" -t remote --skip-tags debug
+#ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=delete file_suffix=test123" -t local --skip-tags debug
+
+# ansible-playbook -i inventory/inventory_file backup_6x.yaml -e "crud=apply, file_suffix=test123"  -t [local|remote] --skip-tags debug
+#ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=apply file_suffix=test123" -t remote
+
+- hosts: devices_6x
+  gather_facts: no
+  connection: network_cli
+ # serial: 1
+  vars: 
+    saos_os: "6x"
+    ansible_network_os: "saos6x"    
+
+  tasks:
+    - import_role:
+        name: backup
