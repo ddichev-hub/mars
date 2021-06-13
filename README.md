@@ -3,6 +3,8 @@ The project includes different tools to help with lab automation.
 - __backup__ - backup/restore device configuration to/from remote server or locally on device. 
                Filename consist of <device_name>_<file_suffix> . This allows to take backup/restore in different stages of configuration.
 
+- __banner__ - create/read/update/delete banner 
+
 
 
 ### To setup your environment:
@@ -56,4 +58,22 @@ Apply config file with file_suffix "test123"
 ```bash
 ansible-playbook -i inventory/inventory_file backup_6x.yaml -e "crud=apply, file_suffix=test123"  -t [local|remote] --skip-tags debug
 ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=apply file_suffix=test123" -t remote
+```
+
+#### __Banner role__
+
+
+There are few variables and tags that change the behavior of the playbook:
+ - __crud__ : variable, it can be "_create_", "_delete_" or "_get_"
+    - "_create_" - create banner
+    - "_delete_" - delete banner
+    - "_get_" - get current banner
+
+ - __debug__: tag, enables debug prints
+
+#### __Example to execute banner role__
+```bash
+ansible-playbook -i inventory/<inventory_file>.yml banner_10x.yaml -e "crud=create" --skip-tags debug
+ansible-playbook -i inventory/<inventory_file>.yml banner_10x.yaml -e "crud=delete" --skip-tags debug
+ansible-playbook -i inventory/<inventory_file>.yml banner_10x.yaml -e "crud=get"  --skip-tags debug
 ```
