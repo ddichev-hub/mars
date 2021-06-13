@@ -1,0 +1,15 @@
+---
+- name: "TASK:Get banner"
+  netconf_rpc:
+    display: json
+    rpc: get
+    content: "{{ lookup('template', './banner_{{saos_os}}_{{crud}}.j2') }}"
+  register: nc_result
+  when: ansible_network_os == "saos10x" and crud == 'get'
+  
+- name: "TASK: Print output"
+  tags:
+     - debug
+  debug:
+    msg: "{{ nc_result.stdout_lines }}"
+  when: ansible_network_os == "saos10x" and crud == 'get'

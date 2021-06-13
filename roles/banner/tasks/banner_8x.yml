@@ -1,0 +1,11 @@
+---
+- name: "TASK: {{crud}} Banner via CLI"
+  cli_command:
+    command: "{{ lookup('template', './banner_{{saos_os}}_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos8x"
+  
+- name: "TASK: Print output"
+  debug:
+    msg: "{{ cli_result }}"
+  when: ansible_network_os == "saos8x"

@@ -1,0 +1,3 @@
+---
+saos_os: "8x"
+ansible_network_os: "saos8x"

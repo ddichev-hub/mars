@@ -1,0 +1,11 @@
+<config>
+    <system xmlns="http://openconfig.net/yang/system">
+      <config>
+        <motd-banner>  
+{% for line in banner %}
+{{ line }}
+{% endfor %}
+        </motd-banner>
+      </config>
+   </system>
+</config>
