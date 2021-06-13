@@ -11,8 +11,10 @@ The project includes different tools to help with lab automation.
 ```bash
 git clone https://github.com/ddichev-hub/mars.git
 cd mars
+apt-get install python3-venv (optional)
 python3 -m venv venv  (optional)
-activate venv/bin/activate  (optional if you prefer to use virtual environment)
+source venv/bin/activate  (optional if you prefer to use virtual environment)
+pip install wheel
 pip install -r requirements.txt
 ```
 
