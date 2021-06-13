@@ -47,19 +47,19 @@ There are few variables and tags that change the behavior of the playbooks:
 #### __Example to execute backup role__
  Create backup with file_suffix test123 on remote/local and do not delete the local config
 ```bash
-ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=create file_suffix=test123" -t [remote|local] --skip-tags delete-local,debug
-ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=create file_suffix=test123" -t remote --skip-tags debug
+ansible-playbook -i inventory/<inventory_file>.yml backup.yaml -e "crud=create file_suffix=test123" -t [remote|local] --skip-tags delete-local,debug
+ansible-playbook -i inventory/<inventory_file>.yml backup.yaml -e "crud=create file_suffix=test123" -t remote --skip-tags debug
 ```
 
 Delete backup file from device
 ```bash
-ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=delete file_suffix=test123" -t local --skip-tags debug
+ansible-playbook -i inventory/<inventory_file>.yml backup.yaml -e "crud=delete file_suffix=test123" -t local --skip-tags debug
 ```
 
 Apply config file with file_suffix "test123" 
 ```bash
-ansible-playbook -i inventory/inventory_file backup_6x.yaml -e "crud=apply, file_suffix=test123"  -t [local|remote] --skip-tags debug
-ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=apply file_suffix=test123" -t remote
+ansible-playbook -i inventory/inventory_file backup.yaml -e "crud=apply, file_suffix=test123"  -t [local|remote] --skip-tags debug
+ansible-playbook -i inventory/<inventory_file>.yml backup.yaml -e "crud=apply file_suffix=test123" -t remote
 ```
 
 #### __Banner role__
