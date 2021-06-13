@@ -75,7 +75,7 @@ There are few variables and tags that change the behavior of the playbook:
 
 #### __Example to execute banner role__
 ```bash
-ansible-playbook -i inventory/<inventory_file>.yml banner_10x.yaml -e "crud=create" --skip-tags debug
-ansible-playbook -i inventory/<inventory_file>.yml banner_10x.yaml -e "crud=delete" --skip-tags debug
-ansible-playbook -i inventory/<inventory_file>.yml banner_10x.yaml -e "crud=get"  --skip-tags debug
+ansible-playbook -i inventory/<inventory_file>.yml banner.yaml -e "crud=create" --skip-tags debug
+ansible-playbook -i inventory/<inventory_file>.yml banner.yaml -e "crud=delete" --skip-tags debug
+ansible-playbook -i inventory/<inventory_file>.yml banner.yaml -e "crud=get"  --skip-tags debug
 ```
