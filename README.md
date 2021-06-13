@@ -19,7 +19,9 @@ pip install -r requirements.txt
 
 All functionality is orgnized in roles under the folder __roles__
 To execute :
-'ansible-playbook -i inventory/TEST_LAB.yml playbook_file.yaml -e '
+```bash
+ansible-playbook -i inventory/TEST_LAB.yml playbook_file.yaml -e
+```
 
 Modify inventory file with IPs, Login credentials for your environment
 
@@ -40,12 +42,18 @@ There are few variables and tags that change the behavior of the playbooks:
 
 #### __Example to execute backup role__
  Create backup with file_suffix test123 on remote/local and do not delete the local config
-> ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=create file_suffix=test123" -t [remote|local] --skip-tags delete-local,debug
-> ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=create file_suffix=test123" -t remote --skip-tags debug
+```bash
+ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=create file_suffix=test123" -t [remote|local] --skip-tags delete-local,debug
+ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=create file_suffix=test123" -t remote --skip-tags debug
+```
 
 Delete backup file from device
-> ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=delete file_suffix=test123" -t local --skip-tags debug
+```bash
+ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=delete file_suffix=test123" -t local --skip-tags debug
+```
 
 Apply config file with file_suffix "test123" 
-> ansible-playbook -i inventory/inventory_file backup_6x.yaml -e "crud=apply, file_suffix=test123"  -t [local|remote] --skip-tags debug
-> ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=apply file_suffix=test123" -t remote
+```bash
+ansible-playbook -i inventory/inventory_file backup_6x.yaml -e "crud=apply, file_suffix=test123"  -t [local|remote] --skip-tags debug
+ansible-playbook -i inventory/<inventory_file>.yml backup_6x.yaml -e "crud=apply file_suffix=test123" -t remote
+```
