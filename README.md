@@ -24,7 +24,7 @@ pip install -r requirements.txt
 All functionality is orgnized in roles under the folder __roles__
 To execute :
 ```bash
-ansible-playbook -i inventory/TEST_LAB.yml playbook_file.yaml -e
+ansible-playbook -i inventory/TEST_LAB.yml playbook_file.yaml 
 ```
 
 Modify inventory file with IPs, Login credentials for your environment
@@ -65,17 +65,15 @@ ansible-playbook -i inventory/<inventory_file>.yml backup.yaml -e "crud=apply fi
 #### __Banner role__
 
 
-There are few variables and tags that change the behavior of the playbook:
- - __crud__ : variable, it can be "_create_", "_delete_" or "_get_"
-    - "_create_" - create banner
-    - "_delete_" - delete banner
-    - "_get_" - get current banner
-
- - __debug__: tag, enables debug prints
+There are few tags that change the behavior of the playbook:
+ - __create__ : tag to create banner
+ - __delete__ : tag to delete banner
+ - __get__ : tag to get current banner 
+ - __debug__: tag to enable debug prints
 
 #### __Example to execute banner role__
 ```bash
-ansible-playbook -i inventory/<inventory_file>.yml banner.yaml -e "crud=create" --skip-tags debug
-ansible-playbook -i inventory/<inventory_file>.yml banner.yaml -e "crud=delete" --skip-tags debug
-ansible-playbook -i inventory/<inventory_file>.yml banner.yaml -e "crud=get"  --skip-tags debug
+ansible-playbook -i inventory/<inventory_file>.yml banner.yaml -t create --skip-tags debug
+ansible-playbook -i inventory/<inventory_file>.yml banner.yaml -t delete --skip-tags debug
+ansible-playbook -i inventory/<inventory_file>.yml banner.yaml -t get  --skip-tags debug
 ```
