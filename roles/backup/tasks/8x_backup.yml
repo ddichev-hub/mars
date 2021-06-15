@@ -1,22 +1,22 @@
 ---
-- name: "create backup"
+- name: "{{crud}} backup"
   cli_command:
     command: "{{ lookup('template', './{{saos_os}}_backup_{{crud}}.j2') }}"
   register: cli_result
   ignore_errors: yes
-  when: ansible_network_os == "saos8x" and crud == 'create'
+  when: ansible_network_os == "saos8x" and (crud == 'create' or crud == 'delete')
   tags: 
    - remote
    - local
 
-- name: "delete backup"
-  cli_command:
-    command: "{{ lookup('template', './{{ saos_os }}_backup_{{crud}}.j2') }}"
-  register: cli_result
-  when: ansible_network_os == "saos8x" and crud == 'delete'
-  tags: 
-   - remote
-   - local
+#- name: "delete backup"
+#  cli_command:
+#    command: "{{ lookup('template', './{{ saos_os }}_backup_{{crud}}.j2') }}"
+#  register: cli_result
+#  when: ansible_network_os == "saos8x" and crud == 'delete'
+#  tags: 
+#   - remote
+#   - local
 
 - name: "Print output"
   tags:

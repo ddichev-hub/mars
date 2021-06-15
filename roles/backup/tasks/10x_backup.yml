@@ -1,28 +1,28 @@
 ---
 
-- name: "create backup"
+- name: "{{crud}} backup"
   netconf_rpc:
     display: json
     rpc: backup
     xmlns: "http://yumaworks.com/ns/yumaworks-system"
     content: "{{ lookup('template', './{{ saos_os }}_backup_{{crud}}.j2') }}"
   register: nc_result
-  when: ansible_network_os == "saos10x" and crud == 'create'
+  when: ansible_network_os == "saos10x" and (crud == 'create' or crud == 'delete')
   tags: 
    - remote
    - local
 
-- name: "delete backup"
-  netconf_rpc:
-    display: json
-    rpc: delete-backup
-    xmlns: "http://yumaworks.com/ns/yumaworks-system"
-    content: "{{ lookup('template', './{{ saos_os }}_backup_{{crud}}.j2') }}"
-  register: nc_result
-  when: ansible_network_os == "saos10x" and crud == 'delete'
-  tags: 
-   - remote
-   - local
+#- name: "delete backup"
+#  netconf_rpc:
+#    display: json
+#    rpc: delete-backup
+#    xmlns: "http://yumaworks.com/ns/yumaworks-system"
+#    content: "{{ lookup('template', './{{ saos_os }}_backup_{{crud}}.j2') }}"
+#  register: nc_result
+#  when: ansible_network_os == "saos10x" and crud == 'delete'
+#  tags: 
+#   - remote
+#   - local
 
 - name: "Print output"
   tags:
