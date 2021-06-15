@@ -1,7 +1,3 @@
 ---
 # vars file for banner
-include: 
-  - devices
-  - devices_6x
-  - devices_8x
-  - devices_10x
+
