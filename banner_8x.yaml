@@ -12,6 +12,16 @@
     ansible_network_os: "saos8x"    
 
   tasks:
+    - set_fact: 
+        crud: create
+      tags: create
+    - set_fact: 
+        crud: get
+      tags: get      
+    - set_fact: 
+        crud: delete
+      tags: delete 
+      
     - import_role:
         name: banner
 
