@@ -8,7 +8,7 @@
 
 - include: banner_6x.yml 
   when: (ansible_network_os == "saos6x")
-
-- include: banner_{{saos_os}}_get.yml
-  when: (ansible_network_os == "saos10x") and crud == 'get'
+  
+#- include: banner_{{saos_os}}_get.yml
+#  when: (ansible_network_os == "saos10x") and (crud == "get")
 
