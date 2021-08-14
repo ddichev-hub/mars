@@ -1,0 +1,59 @@
+---
+- name: "TASK: {{crud}} sw_package"
+  netconf_rpc:
+    display: json
+    rpc: software-remove
+    xmlns: "http://www.ciena.com/ns/yang/ciena-software-mgmt"
+    content: "{{ lookup('template', './sw_package_{{ saos_os }}_{{crud}}.j2') }}"
+  register: nc_result
+  when: ansible_network_os == "saos10x" and (crud == 'delete')
+  tags: 
+   - delete
+
+- name: "TASK: {{crud}} sw_package"
+  netconf_rpc:
+    display: json
+    rpc: software-install
+    xmlns: "http://www.ciena.com/ns/yang/ciena-software-mgmt"
+    content: "{{ lookup('template', './sw_package_{{ saos_os }}_{{crud}}.j2') }}"
+  register: nc_result
+  when: ansible_network_os == "saos10x" and (crud == 'install')
+  tags: 
+   - install
+
+- name: "TASK: {{crud}} sw_package"
+  netconf_rpc:
+    display: json
+    rpc: software-activate
+    xmlns: "http://www.ciena.com/ns/yang/ciena-software-mgmt"
+    content: "{{ lookup('template', './sw_package_{{ saos_os }}_{{crud}}.j2') }}"
+  register: nc_result
+  when: ansible_network_os == "saos10x" and (crud == 'activate')
+  tags: 
+   - activate
+
+- name: "TASK: Print output"
+  tags:
+    - debug
+    - install
+    - delete
+  debug:
+    msg: "{{ nc_result }}"
+  when: ansible_network_os == "saos10x" and (crud == 'install' or crud == 'delete')
+
+- name: "TASK:Get sw package"
+  netconf_rpc:
+    display: json
+    rpc: get
+    content: "{{ lookup('template', './sw_package_{{saos_os}}_{{crud}}.j2') }}"
+  register: nc_result
+  when: ansible_network_os == "saos10x" and crud == "get"
+  tags: get
+  
+- name: "TASK: Print output"
+  tags:
+    - debug
+    - get
+  debug:
+    msg: "{{ nc_result.output['rpc-reply']['data']['software-state']['package'] }}"
+  when: ansible_network_os == "saos10x" and crud == "get"

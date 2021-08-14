@@ -1,0 +1,17 @@
+---
+# tasks file for sw_package
+- include: sw_package_10x.yml 
+  when: (ansible_network_os == "saos10x") 
+
+
+#- include: sw_package_8x.yml 
+#  when: (ansible_network_os == "saos8x")
+
+
+#- include: sw_package_6x.yml 
+#  when: (ansible_network_os == "saos6x")
+
+  
+#- include: banner_{{saos_os}}_get.yml
+#  when: (ansible_network_os == "saos10x") and (crud == "get")
+

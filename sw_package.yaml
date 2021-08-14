@@ -1,0 +1,63 @@
+# to execute 
+## sw_package can be specified as external variable and it is optional for install action
+# ansible-playbook -i inventory/inventory_file sw_package.yaml -t install --skip-tags debug
+# ansible-playbook -i inventory/inventory_file sw_package.yaml -t install --skip-tags debug -e "sw_package=saos-10-06-00-0283"
+# ansible-playbook -i inventory/inventory_file sw_package.yaml -t activate --skip-tags debug -e "sw_package=saos-10-06-00-0283"
+# ansible-playbook -i inventory/inventory_file sw_package.yaml -t delete --skip-tags debug -e "sw_package=saos-10-06-00-0283"
+# ansible-playbook -i inventory/inventory_file sw_package.yaml -t get  --skip-tags debug
+
+
+- hosts: devices
+  gather_facts: no
+
+  tasks:
+  #  - debug: 
+  #      msg: "{{hostvars[inventory_hostname]}}"
+  #    tags: debug
+      
+    - name: Set 8x OS variables
+      set_fact:
+        ansible_network_os: "saos8x" 
+        saos_os: "8x"
+        ansible_connection: "network_cli"
+      when: "'devices_8x' in hostvars[inventory_hostname]['group_names']"
+      tags: always
+
+    - name: Set 6x OS variables
+      set_fact:
+        ansible_network_os: "saos6x" 
+        saos_os: "6x"
+        ansible_connection: "network_cli"
+      when: "'devices_6x' in hostvars[inventory_hostname]['group_names']"
+      tags: always
+
+    - name: Set 10x OS variables
+      set_fact:
+        ansible_network_os: "saos10x" 
+        saos_os: "10x"
+        ansible_connection: "netconf"
+      when: "'devices_10x' in hostvars[inventory_hostname]['group_names']"
+      tags: always      
+
+    - name: Set install action variables    
+      set_fact:
+        crud: install
+      tags: install
+
+    - name: Set activate action variables    
+      set_fact:
+        crud: activate
+      tags: activate
+
+    - name: Set get action variables    
+      set_fact:
+        crud: get
+      tags: get
+
+    - name: Set delete action variables    
+      set_fact:
+        crud: delete
+      tags: delete
+
+    - import_role:
+        name: sw_package
