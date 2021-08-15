@@ -1,0 +1,18 @@
+<config>
+  <interfaces xmlns="http://openconfig.net/yang/interfaces">
+    <interface>
+      <name>lb0</name>
+      <ipv4 xmlns="http://ciena.com/ns/yang/ciena-openconfig-if-ip">
+        <addresses>
+          <address>
+            <ip>{{config.lb0}}</ip>
+            <config>
+              <ip>{{config.lb0}}</ip>
+              <prefix-length>32</prefix-length>
+            </config>
+          </address>
+        </addresses>
+      </ipv4>
+    </interface>
+  </interfaces>
+</config>
