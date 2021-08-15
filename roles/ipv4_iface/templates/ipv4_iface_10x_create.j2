@@ -1,0 +1,64 @@
+<config>
+  <classifiers xmlns:classifier="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-mef-classifier">
+    <classifier>
+      <name>v_{{ item.vlan }}</name>
+      <filter-entry>
+        <filter-parameter>classifier:vtag-stack</filter-parameter>
+{% if item.vlan != "unt"%}        
+        <vtags>
+          <tag>1</tag>
+          <vlan-id>{{ item.vlan }}</vlan-id>
+        </vtags>
+{% elif item.vlan == "unt" %}
+        <untagged-exclude-priority-tagged>true</untagged-exclude-priority-tagged>
+{% endif %} 
+      </filter-entry>
+    </classifier>
+  </classifiers>
+  <fds xmlns="urn:ciena:params:xml:ns:yang:ciena-pn:ciena-mef-fd">
+    <fd>
+      <name>{{ item.name }}_{{ item.vlan}}</name>
+      <mode>vpls</mode>
+    </fd>
+  </fds>    
+  <fps xmlns="urn:ciena:params:xml:ns:yang:ciena-pn:ciena-mef-fp">  
+{%   for port in item.ports %}
+      <fp>
+        <name>{{ item.name  }}_v{{item.vlan}}</name>
+        <fd-name>{{  item.name  }}_{{item.vlan}}</fd-name>
+        <logical-port>{{  port  }}</logical-port>
+        <mtu-size>2000</mtu-size>
+{% if item.vlan != "unt"%}        
+        <egress-l2-transform>
+          <egress-name>push-0x8100.{{ item.vlan }}.7</egress-name>
+          <vlan-stack>
+            <tag>1</tag>
+            <push-tpid>tpid-8100</push-tpid>
+            <push-pcp>pcp-7</push-pcp>
+            <push-vid>{{ item.vlan }}</push-vid>
+          </vlan-stack>
+        </egress-l2-transform>
+{% endif %}                
+        <classifier-list>v_{{ item.vlan }}</classifier-list>
+        <stats-collection>on</stats-collection>
+      </fp>
+{%   endfor %}  
+  </fps>
+  <interfaces xmlns="http://openconfig.net/yang/interfaces">
+   <interface>
+     <name>{{item.name}}_v{{item.vlan}}</name>
+    <config>
+      <name>{{item.name}}_v{{item.vlan}}</name>
+      <mtu>1500</mtu>
+      <admin-status xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">true</admin-status>
+      <type xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">ip</type>
+      <underlay-binding xmlns="http://ciena.com/ns/yang/ciena-underlay-binding">
+        <config>
+         <fd>{{item.name}}_{{item.vlan}}</fd>
+       </config>
+      </underlay-binding>
+      <vrfName xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">{{item.vrf}}</vrfName>
+    </config>
+   </interface>
+ </interfaces>  
+</config>
