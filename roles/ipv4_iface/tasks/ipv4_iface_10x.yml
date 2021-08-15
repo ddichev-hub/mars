@@ -113,4 +113,23 @@
 #    msg: "{{ item.output['rpc-reply']['data']['interfaces']['interface']}}"
 #  with_items: "{{ nc_result['results']}}"
   when: ansible_network_os == "saos10x" and crud == "get"
+
+- name: "TASK:Get ipv4 loopback interface"
+  netconf_rpc:
+    display: json
+    rpc: get
+    content: "{{ lookup('template', './ipv4_loopback_iface_{{saos_os}}_{{crud}}.j2') }}"
+  register: nc_result
+  when: ansible_network_os == "saos10x" and crud == "get"
+#  with_items: "{{ hostvars[inventory_hostname]['config']['fps'] }}"  
+  tags: get
+  
+- name: "TASK: Print output"
+  tags:
+    - get
+  debug:
+    msg: "{{nc_result}}"
+#    msg: "{{ item.output['rpc-reply']['data']['interfaces']['interface']}}"
+#  with_items: "{{ nc_result['results']}}"
+  when: ansible_network_os == "saos10x" and crud == "get"
   
