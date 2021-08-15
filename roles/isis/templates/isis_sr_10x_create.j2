@@ -1,0 +1,48 @@
+{% if config.sr is defined %}
+<config>
+  <isis xmlns="http://ciena.com/ns/yang/ciena-isis">
+    <instance>
+      <tag>{{ config.isis.tag }}</tag>
+{% if config.sr is defined %} 
+      <cspf-flag>true</cspf-flag>
+      <segment-routing>
+        <bindings>
+          <advertise>false</advertise>
+          <receive>true</receive>          
+        </bindings>
+      </segment-routing>
+{% endif %}      
+{% if config.isis.fast_reroute %}      
+      <fast-reroute>
+        <level>
+          <level-type>level-2</level-type>
+          <lfa>
+            <per-prefix-enable>true</per-prefix-enable>
+            <ti-lfa>
+              <per-prefix-enable>true</per-prefix-enable>
+            </ti-lfa>
+          </lfa>
+        </level>
+        <level>
+          <level-type>level-1</level-type>
+          <lfa>
+            <per-prefix-enable>true</per-prefix-enable>
+            <ti-lfa>
+              <per-prefix-enable>true</per-prefix-enable>
+            </ti-lfa>
+          </lfa>
+        </level>        
+      </fast-reroute>      
+{% endif %}
+    </instance>
+  </isis>   
+  <segment-routing xmlns="http://ciena.com/ns/yang/ciena-sr">
+    <connected-prefix-sid-map>
+      <prefix>{{config.lb0}}/32</prefix>
+      <value-type>{{config.sr.sid_type}}</value-type>
+      <start-sid>{{config.sr.sid_id}}</start-sid>
+      <interface>lb0</interface>
+    </connected-prefix-sid-map>
+  </segment-routing>
+</config>
+{% endif %}

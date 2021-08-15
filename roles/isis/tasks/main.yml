@@ -1,0 +1,10 @@
+---
+# tasks file for isis
+- include: isis_10x.yml 
+  when: (ansible_network_os == "saos10x") 
+
+#- include: isis_8x.yml 
+#  when: (ansible_network_os == "saos8x")
+#
+#- include: isis_6x.yml 
+#  when: (ansible_network_os == "saos6x")

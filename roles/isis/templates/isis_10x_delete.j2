@@ -1,0 +1,5 @@
+{% if config.isis is defined %}
+<config>
+  <isis xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="remove" xmlns="http://ciena.com/ns/yang/ciena-isis"/>
+</config>
+{% endif %}
