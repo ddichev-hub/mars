@@ -1,0 +1,85 @@
+---
+- name: "TASK: {{crud}} ipv4 interface"
+  netconf_config:
+    content: "{{ lookup('template', './ipv4_iface_{{ saos_os }}_{{crud}}.j2') }}"
+    target: running
+    #backup: yes
+    format: xml
+    lock: if-supported
+    default_operation: merge
+    error_option: rollback-on-error
+  register: nc_result
+  when: ansible_network_os == "saos10x" and (crud == 'create' or crud == 'delete')
+  with_items: "{{ hostvars[inventory_hostname]['config']['fps'] }}"  
+  run_once: true
+  tags: 
+    - create
+    - delete
+
+- name: "TASK: {{crud}} vlan classifier"
+  netconf_config:
+    content: "{{ lookup('template', './ipv4_iface_classifier_{{ saos_os }}_{{crud}}.j2') }}"
+    target: running
+    #backup: yes
+    format: xml
+    lock: if-supported
+    default_operation: merge
+    error_option: rollback-on-error
+  register: nc_result
+  when: ansible_network_os == "saos10x" and (crud ==  'delete')
+  with_items: "{{ hostvars[inventory_hostname]['config']['fps'] }}"  
+  run_once: true
+  tags: 
+    - delete
+
+- name: "TASK: {{crud}} ipv4 address"
+  netconf_config:
+    content: "{{ lookup('template', './ipv4_iface_addr_{{ saos_os }}_{{crud}}.j2') }}"
+    target: running
+    #backup: yes
+    format: xml
+    lock: if-supported
+    default_operation: merge
+    error_option: rollback-on-error
+  register: nc_result
+  when: ansible_network_os == "saos10x" and (crud ==  'create')
+  with_items: "{{ hostvars[inventory_hostname]['config']['fps'] }}"  
+  run_once: true
+  tags: 
+    - create   
+
+- name: "TASK: Print output"
+  tags:
+    - debug
+    - create
+    - delete
+  debug:
+    msg: "{{ nc_result }}"
+  when: ansible_network_os == "saos10x" and (crud == 'create' or crud == 'delete')
+
+- name: "TASK: Print some debug:"
+  tags: 
+    - debug
+  debug: 
+    msg: "{{ hostvars[inventory_hostname]['config']['fps'] }}"
+
+
+
+- name: "TASK:Get ipv4 interface"
+  netconf_rpc:
+    display: json
+    rpc: get
+    content: "{{ lookup('template', './ipv4_iface_{{saos_os}}_{{crud}}.j2') }}"
+  register: nc_result
+  when: ansible_network_os == "saos10x" and crud == "get"
+  with_items: "{{ hostvars[inventory_hostname]['config']['fps'] }}"  
+  tags: get
+  
+- name: "TASK: Print output"
+  tags:
+    - get
+  debug:
+    msg: "{{ item.output['rpc-reply']['data']['interfaces']['interface']}}"
+  with_items: "{{ nc_result['results']}}"
+  when: ansible_network_os == "saos10x" and crud == "get"
+  

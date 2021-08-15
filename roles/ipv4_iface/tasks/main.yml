@@ -1,0 +1,14 @@
+---
+# tasks file for ipv4_iface
+- include: ipv4_iface_10x.yml 
+  when: (ansible_network_os == "saos10x") 
+
+#- include: ipv4_iface_8x.yml 
+#  when: (ansible_network_os == "saos8x")
+#
+#- include: ipv4_iface_6x.yml 
+#  when: (ansible_network_os == "saos6x")
+  
+#- include: banner_{{saos_os}}_get.yml
+#  when: (ansible_network_os == "saos10x") and (crud == "get")
+

@@ -1,0 +1,18 @@
+<config>
+  <interfaces xmlns="http://openconfig.net/yang/interfaces">
+    <interface>
+      <name>{{item.name}}_v{{item.vlan}}</name>
+      <ipv4 xmlns="http://ciena.com/ns/yang/ciena-openconfig-if-ip">
+        <addresses>
+          <address>
+            <ip>{{item.ip}}</ip>
+            <config>
+              <ip>{{item.ip}}</ip>
+              <prefix-length>{{item.prefix}}</prefix-length>
+            </config>
+          </address>
+        </addresses>
+      </ipv4>
+    </interface>
+  </interfaces>
+</config>

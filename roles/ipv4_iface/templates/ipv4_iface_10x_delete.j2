@@ -1,0 +1,19 @@
+<config>
+  <interfaces xmlns="http://openconfig.net/yang/interfaces">
+   <interface xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="remove">
+     <name>{{item.name}}_v{{item.vlan}}</name>
+   </interface>
+ </interfaces>  
+   <fps xmlns="urn:ciena:params:xml:ns:yang:ciena-pn:ciena-mef-fp">
+{%   for port in item.ports %}
+      <fp xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="remove">
+        <name>{{ item.name  }}_v{{item.vlan}}</name>
+      </fp>
+{%   endfor %}
+  </fps> 
+  <fds xmlns="urn:ciena:params:xml:ns:yang:ciena-pn:ciena-mef-fd">
+    <fd xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="remove">
+      <name>{{ item.name }}_{{ item.vlan }}</name>
+    </fd>
+  </fds>  
+</config>
