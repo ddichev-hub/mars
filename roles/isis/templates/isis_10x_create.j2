@@ -1,0 +1,27 @@
+{% if config.isis is defined %}
+<config>
+  <isis xmlns="http://ciena.com/ns/yang/ciena-isis">
+    <instance>
+      <tag>{{ config.isis.tag }}</tag>
+      <net>{{ config.isis.net}}</net>
+      <level-type>{{ config.isis.level }}</level-type>
+      <interfaces>
+        <interface>
+          <name>lb0</name>
+          <interface-type>point-to-point</interface-type>
+          <level-type>{{ config.isis.level }}</level-type>				
+        </interface>
+{% for fp in config.fps %}
+{% if fp.isis %}
+        <interface>
+          <name>{{fp.name}}_v{{fp.vlan}}</name>
+          <interface-type>{{fp.isis_if_type}}</interface-type>
+          <level-type>{{ config.isis.level }}</level-type>				
+        </interface>
+{% endif %}
+{% endfor %} 
+      </interfaces>
+    </instance>
+  </isis>   
+</config>
+{% endif %}

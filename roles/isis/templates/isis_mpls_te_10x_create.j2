@@ -1,0 +1,15 @@
+{% if config.isis is defined %}
+<config>
+  <isis xmlns="http://ciena.com/ns/yang/ciena-isis">
+    <instance>
+      <tag>{{ config.isis.tag }}</tag>
+{% if config.sr is defined %} 
+      <mpls-te>
+        <router-id>{{ config.lb0 }}</router-id>
+        <level-type>{{ config.isis.level }}</level-type>
+      </mpls-te>
+{% endif %}      
+    </instance>
+  </isis>   
+</config>
+{% endif %}
