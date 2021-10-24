@@ -1,0 +1,4 @@
+{% for iface in config.ifaces %}
+interface delete ip-interface ip{{iface.port}}_v{{iface.vlan}}
+{% endfor %}
+config save
