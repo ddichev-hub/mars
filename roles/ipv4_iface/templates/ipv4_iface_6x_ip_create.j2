@@ -1,0 +1,4 @@
+{% for iface in config.ifaces %}
+interface create ip-interface ipCtrl_v{{iface.vlan}} ip {{iface.ip}} vlan {{iface.vlan}} network-type point-to-point
+{% endfor %}
+config save

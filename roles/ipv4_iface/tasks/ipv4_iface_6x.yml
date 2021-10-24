@@ -1,0 +1,33 @@
+---
+- name: "TASK: {{crud}} VLAN via CLI"
+  cli_command:
+    command: "{{ lookup('template', './ipv4_iface_{{ saos_os }}_vlan_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos6x" and (crud == 'create' or crud == 'delete')
+  run_once: false
+  ignore_errors: yes
+  tags: 
+    - create
+    - delete
+
+- name: "TASK: {{crud}} IP via CLI"
+  cli_command:
+    command: "{{ lookup('template', './ipv4_iface_{{ saos_os }}_ip_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos6x" and (crud == 'create' or crud == 'delete')
+  run_once: false
+  ignore_errors: no
+  tags: 
+    - create
+    - delete
+
+- name: "TASK: {{crud}} VLAN via CLI"
+  cli_command:
+    command: "{{ lookup('template', './ipv4_iface_{{ saos_os }}_vlan_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos6x" and (crud == 'create' or crud == 'delete')
+  run_once: false
+  ignore_errors: yes
+  tags: 
+    - create
+    - delete

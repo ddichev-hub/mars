@@ -1,0 +1,5 @@
+{% for iface in config.ifaces %}
+vlan remove vlan {{iface.vlan}} port {{iface.port}}
+vlan delete vlan {{iface.vlan}}
+{% endfor %}
+config save
