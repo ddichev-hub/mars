@@ -1,0 +1,67 @@
+---
+#- include: ipv4_iface_8x_vs.yml 
+#  when: ansible_network_os == "saos8x"
+#
+#- include: ipv4_iface_8x_subport.yml 
+#  when: ansible_network_os == "saos8x"
+#
+#- include: ipv4_iface_8x_cpu.yml 
+#  when: ansible_network_os == "saos8x"
+#
+#- include: ipv4_iface_8x_ip.yml 
+#  when: ansible_network_os == "saos8x"
+- name: "TASK: {{crud}} VS via CLI"
+  cli_command:
+    command: "{{ lookup('template', './ipv4_iface_{{ saos_os }}_vs_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos8x" and (crud == 'create' or crud == 'delete')
+  run_once: true
+  ignore_errors: yes
+  tags: 
+    - create
+    - delete
+
+- name: "TASK: {{crud}} subport via CLI"
+  cli_command:
+    command: "{{ lookup('template', './ipv4_iface_{{ saos_os }}_subport_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos8x" and (crud == 'create' or crud == 'delete')
+  run_once: true
+  ignore_errors: no
+  tags: 
+    - create
+    - delete
+
+- name: "TASK: {{crud}} IP via CLI"
+  cli_command:
+    command: "{{ lookup('template', './ipv4_iface_{{ saos_os }}_ip_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos8x" and (crud == 'create' or crud == 'delete')
+  run_once: true
+  ignore_errors: no
+  tags: 
+    - create
+    - delete
+
+- name: "TASK: {{crud}} CPU interface via CLI"
+  cli_command:
+    command: "{{ lookup('template', './ipv4_iface_{{ saos_os }}_cpu_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos8x" and (crud == 'create' or crud == 'delete')
+  run_once: true
+  ignore_errors: no
+  tags: 
+    - create
+    - delete
+
+- name: "TASK: {{crud}} VS via CLI"
+  cli_command:
+    command: "{{ lookup('template', './ipv4_iface_{{ saos_os }}_vs_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos8x" and (crud == 'create' or crud == 'delete')
+  run_once: true
+  ignore_errors: yes
+  tags: 
+    - create
+    - delete
+    

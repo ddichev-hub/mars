@@ -1,0 +1,5 @@
+{% for iface in config.ifaces %}
+virtual-switch interface detach sub-port sp{{iface.port}}_v{{iface.vlan}}
+sub-port delete sub-port sp{{iface.port}}_v{{iface.vlan}}
+{% endfor %}
+config save

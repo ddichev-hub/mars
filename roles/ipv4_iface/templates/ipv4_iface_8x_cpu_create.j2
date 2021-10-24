@@ -1,0 +1,5 @@
+{% for iface in config.ifaces %}
+cpu-interface sub-interface create cpu-subinterface cpu{{iface.port}}_v{{iface.vlan}} cpu-egress-l2-transform push-8100.{{iface.vlan}}.7 resolved-cos-profile fixed_7
+virtual-switch interface attach cpu-subinterface cpu{{iface.port}}_v{{iface.vlan}} vs vs{{iface.port}}_v{{iface.vlan}}
+{% endfor %}
+config save

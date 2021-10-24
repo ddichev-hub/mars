@@ -1,0 +1,4 @@
+{% for iface in config.ifaces %}
+virtual-switch create vs vs{{iface.port}}_v{{iface.vlan}}
+{% endfor %}
+config save

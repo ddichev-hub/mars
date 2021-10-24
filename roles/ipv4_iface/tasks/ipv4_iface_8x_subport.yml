@@ -1,0 +1,6 @@
+---
+- name: "TASK: {{crud}} subport via CLI"
+  cli_command:
+    command: "{{ lookup('template', './ipv4_iface_{{ saos_os }}_subport_{{crud}}.j2') }}"
+  register: cli_result
+  ignore_errors: yes

@@ -1,0 +1,5 @@
+{% for iface in config.ifaces %}
+sub-port create sub-port sp{{iface.port}}_v{{iface.vlan}} parent-port {{iface.port}} classifier-precedence {{iface.vlan}} vtag-stack {{iface.vlan}}
+virtual-switch interface attach sub-port sp{{iface.port}}_v{{iface.vlan}} vs vs{{iface.port}}_v{{iface.vlan}}
+{% endfor %}
+config save
