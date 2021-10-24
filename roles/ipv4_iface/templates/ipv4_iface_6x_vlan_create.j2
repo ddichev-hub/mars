@@ -1,0 +1,5 @@
+{% for iface in config.ifaces %}
+vlan create vlan {{iface.vlan}} name ipCtrl_v{{iface.vlan}}
+vlan add vlan {{iface.vlan}} port {{iface.port}}
+{% endfor %}
+config save
