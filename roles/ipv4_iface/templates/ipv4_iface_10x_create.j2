@@ -19,6 +19,14 @@
     <fd>
       <name>{{ item.name }}_{{ item.vlan}}</name>
       <mode>vpls</mode>
+{% if item.vlan != "unt"%}     
+      <initiate-l2-transform>
+        <vlan-stack>
+          <tag>1</tag>
+          <push-vid>{{ item.vlan }}</push-vid>
+        </vlan-stack>
+      </initiate-l2-transform>      
+{% endif %}        
     </fd>
   </fds>    
   <fps xmlns="urn:ciena:params:xml:ns:yang:ciena-pn:ciena-mef-fp">  
@@ -27,18 +35,6 @@
         <name>{{ item.name  }}_v{{item.vlan}}</name>
         <fd-name>{{  item.name  }}_{{item.vlan}}</fd-name>
         <logical-port>{{  port  }}</logical-port>
-        <mtu-size>2000</mtu-size>
-{% if item.vlan != "unt"%}        
-        <egress-l2-transform>
-          <egress-name>push-0x8100.{{ item.vlan }}.7</egress-name>
-          <vlan-stack>
-            <tag>1</tag>
-            <push-tpid>tpid-8100</push-tpid>
-            <push-pcp>pcp-7</push-pcp>
-            <push-vid>{{ item.vlan }}</push-vid>
-          </vlan-stack>
-        </egress-l2-transform>
-{% endif %}                
         <classifier-list>v_{{ item.vlan }}</classifier-list>
         <stats-collection>on</stats-collection>
       </fp>
