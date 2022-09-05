@@ -27,6 +27,8 @@ share/python-wheels/
 *.egg
 MANIFEST
 collections/*
+inventory/*
+!inventory/TEST_LAB.yml
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
