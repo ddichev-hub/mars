@@ -11,5 +11,21 @@
 {% endif %}      
     </instance>
   </isis>   
+  <mpls xmlns="http://ciena.com/ns/yang/ciena-mpls">
+    <interfaces>
+      <interface>
+        <name>lb0</name>
+        <label-switching>true</label-switching>
+      </interface>      
+{% for fp in config.fps %}
+{% if fp.mpls %}
+      <interface>
+        <name>{{fp.name}}_v{{fp.vlan}}</name>
+        <label-switching>true</label-switching>
+      </interface>
+{% endif %}
+{% endfor %}       
+    </interfaces>
+  </mpls>  
 </config>
 {% endif %}
