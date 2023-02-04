@@ -6,7 +6,8 @@
 # ansible-playbook -i inventory/inventory_file backup.yaml -e "file_suffix=test123"  -t apply[local|remote] --skip-tags debug
 #ansible-playbook -i inventory/<inventory_file>.yml backup.yaml -e "file_suffix=test123" -t apply,remote
 
-
+##TODO Add option for multiple servers. Currently support only single backup server. It will need to update the ansible playbook to go in a loop and call the jinja template for each server.
+##TODO: Get software release of the device and add it to the backup filename
 - hosts: devices
   gather_facts: no
 
