@@ -1,0 +1,32 @@
+{% if users is defined %}
+<config>
+  <system xmlns="http://openconfig.net/yang/system">
+    <aaa>
+      <authentication>
+        <users>
+{% for user in users %}
+          <user>
+            <username>{{user.user_name}}</username>
+            <config>
+              <username>{{user.user_name}}</username>
+              <role>{{user.user_role}}</role>
+              <password xmlns="http://www.ciena.com/ns/yang/ciena-openconfig-system">{{user.user_pwd}}</password>
+            </config>
+          </user>
+{% endfor %}
+        </users>
+      </authentication>
+    </aaa>
+  </system>
+  <nacm xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-acm">
+    <groups>
+      <group>
+        <name>super</name>
+{% for user in users %}                
+        <user-name>{{user.user_name}}</user-name>
+{% endfor %}              
+      </group>
+    </groups>
+  </nacm>  
+</config>        
+{% endif %}

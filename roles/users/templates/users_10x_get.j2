@@ -1,0 +1,15 @@
+{% if users is defined %}
+<filter type="subtree">
+  <system xmlns="http://openconfig.net/yang/system">
+    <aaa>
+      <authentication>
+        <users>
+          <user>
+            <state/>
+          </user>
+        </users>
+      </authentication>
+    </aaa>
+  </system>
+</filter>
+{% endif %}
