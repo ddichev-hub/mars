@@ -5,6 +5,16 @@ The project includes different tools to help with lab automation.
 
 - __banner__ - create/read/update/delete banner 
 
+- __software package__ - install/activate/remove software package
+
+- __ipv4 interface__ - create/read/update/delete ipv4 interface
+
+- __isis__ - create/read/update/delete isis configuration
+
+- __bgp__ - create/read/update/delete bgp configuration
+
+- __users__ - create/read/update/delete local users
+
 
 
 ### To setup your environment:
