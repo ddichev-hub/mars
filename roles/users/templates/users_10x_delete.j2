@@ -1,0 +1,27 @@
+{% if users is defined %}
+<config>
+  <nacm xmlns="urn:ietf:params:xml:ns:yang:ietf-netconf-acm">
+    <groups>
+      <group>
+        <name>super</name>
+{% for user in users %}              
+        <user-name xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="remove">{{user.user_name}}</user-name>
+{% endfor %}        
+      </group>
+    </groups>
+  </nacm>  
+<system>
+  <aaa>
+    <authentication>
+      <users>
+{% for user in users %}        
+        <user xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="remove">
+          <username>{{user.user_name}}</username>
+        </user>
+{% endfor %}                          
+      </users>
+    </authentication>
+  </aaa>
+</system>  
+</config>
+{% endif %}

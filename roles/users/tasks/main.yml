@@ -1,0 +1,10 @@
+---
+# tasks file for users
+- include: users_10x.yml 
+  when: (ansible_network_os == "saos10x") 
+
+#- include: users_8x.yml 
+#  when: (ansible_network_os == "saos8x")
+
+#- include: users_6x.yml 
+#  when: (ansible_network_os == "saos6x")
