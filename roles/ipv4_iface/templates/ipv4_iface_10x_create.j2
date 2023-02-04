@@ -45,7 +45,7 @@
      <name>{{item.name}}_v{{item.vlan}}</name>
     <config>
       <name>{{item.name}}_v{{item.vlan}}</name>
-      <mtu>1500</mtu>
+      <mtu>{{item.ip_mtu}}</mtu>
       <admin-status xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">true</admin-status>
       <type xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">ip</type>
       <underlay-binding xmlns="http://ciena.com/ns/yang/ciena-underlay-binding">
@@ -56,5 +56,14 @@
       <vrfName xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">{{item.vrf}}</vrfName>
     </config>
    </interface>
+
  </interfaces>  
+ <logical-ports xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-mef-logical-port">
+{%   for port in item.ports %}
+  <logical-port>
+   <name>{{  port  }}</name>
+   <mtu>{{item.port_mtu}}</mtu>
+  </logical-port>
+{%   endfor %}    
+ </logical-ports>
 </config>
