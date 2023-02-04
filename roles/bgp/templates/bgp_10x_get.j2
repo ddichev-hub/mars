@@ -1,0 +1,9 @@
+{% if config.bgp is defined %}
+<filter type="subtree">
+    <bgp-state xmlns="http://ciena.com/ns/yang/ciena-bgp">
+      <instance>
+        <as>65032</as>
+      </instance>
+    </bgp-state>
+</filter>
+{% endif %}

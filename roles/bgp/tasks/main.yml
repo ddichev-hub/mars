@@ -1,0 +1,10 @@
+---
+# tasks file for bgp
+- include: bgp_10x.yml 
+  when: (ansible_network_os == "saos10x") 
+
+#- include: bgp_8x.yml 
+#  when: (ansible_network_os == "saos8x")
+
+#- include: bgp_6x.yml 
+#  when: (ansible_network_os == "saos6x")

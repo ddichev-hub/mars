@@ -1,0 +1,103 @@
+---
+# tasks file for bgp
+- name: "{{crud}} bgp instance"
+  netconf_config:
+    content: "{{ lookup ('template', 'bgp_{{ saos_os }}_{{crud}}.j2') }}"
+    target: running
+    #backup: yes
+    format: xml
+    lock: if-supported
+    default_operation: merge
+    error_option: rollback-on-error
+  register: nc_result
+  when: ansible_network_os == "saos10x" and (crud == "create" or crud == "delete")
+  tags: 
+    - create
+    - delete
+
+- name: "TASK:Get BGP"
+  netconf_rpc:
+    display: json
+    rpc: get
+    content: "{{ lookup('template', './bgp_{{saos_os}}_{{crud}}.j2') }}"
+  register: nc_result
+  when: ansible_network_os == "saos10x" and crud == "get"
+#  with_items: "{{ hostvars[inventory_hostname]['config']['fps'] }}"  
+  tags: get
+
+- name: "TASK: Print output"
+  tags:
+    - get
+  debug:
+    msg: "{{nc_result.output}}"
+#    msg: "{{ item.output['rpc-reply']['data']['interfaces']['interface']}}"
+#  with_items: "{{ nc_result['results']}}"
+  when: ansible_network_os == "saos10x" and crud == "get"
+
+#- name: "{{crud}} isis mpls-te"
+#  netconf_config:
+#    content: "{{ lookup ('template', 'isis_mpls_te_{{ saos_os }}_{{crud}}.j2') }}"
+#    target: running
+#    #backup: yes
+#    format: xml
+#    lock: if-supported
+#    default_operation: merge
+#    error_option: rollback-on-error
+#  register: nc_result
+#  when: ansible_network_os == "saos10x" and (crud == "create" )
+#  tags: 
+#    - create
+#
+#- name: "isis sr enable"
+#  netconf_config:
+#    content: "{{ lookup ('template', 'isis_sr_{{ saos_os }}_enable.j2') }}"
+#    target: running
+#    #backup: yes
+#    format: xml
+#    lock: if-supported
+#    default_operation: merge
+#    error_option: rollback-on-error
+#  register: nc_result
+#  when: ansible_network_os == "saos10x" and (crud == "create" )  
+#  tags: 
+#    - create  
+#  
+#- name: "{{crud}} sr"
+#  netconf_config:
+#    content: "{{ lookup ('template', 'isis_sr_{{ saos_os }}_{{crud}}.j2') }}"
+#    target: running
+#    #backup: yes
+#    format: xml
+#    lock: if-supported
+#    default_operation: merge
+#    error_option: rollback-on-error
+#  register: nc_result
+#  when: ansible_network_os == "saos10x" and (crud == "create" or crud == "delete" )  
+#  tags: 
+#    - create
+#    - delete  
+
+
+
+#  
+
+#
+#- name: "TASK:Get ipv4 loopback interface"
+#  netconf_rpc:
+#    display: json
+#    rpc: get
+#    content: "{{ lookup('template', './ipv4_loopback_iface_{{saos_os}}_{{crud}}.j2') }}"
+#  register: nc_result
+#  when: ansible_network_os == "saos10x" and crud == "get"
+##  with_items: "{{ hostvars[inventory_hostname]['config']['fps'] }}"  
+#  tags: get
+#  
+#- name: "TASK: Print output"
+#  tags:
+#    - get
+#  debug:
+#    msg: "{{nc_result}}"
+##    msg: "{{ item.output['rpc-reply']['data']['interfaces']['interface']}}"
+##  with_items: "{{ nc_result['results']}}"
+#  when: ansible_network_os == "saos10x" and crud == "get"
+#  

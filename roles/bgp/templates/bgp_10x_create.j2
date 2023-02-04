@@ -1,0 +1,52 @@
+{% if config.bgp is defined %}
+<config>
+  <bgp xmlns="http://ciena.com/ns/yang/ciena-bgp">
+    <instance>
+      <as>{{ config.bgp.as }}</as>
+      <router-id>{{ config.lb0 }}</router-id>
+        <address-family>
+        <afi>vpnv4</afi>
+      <safi>unicast</safi>
+      </address-family>	  
+      <address-family>
+        <afi>ipv4</afi>
+      <safi>unicast</safi>
+      <allocate-label>
+        <all>true</all>
+      </allocate-label>
+      <redistribute>
+        <protocol>static</protocol>
+      </redistribute>
+      </address-family>
+        <address-family>
+        <afi>l2vpn</afi>
+      <safi>evpn</safi>
+      </address-family>      
+{% for peer in config.bgp.peers %}
+{% if peer %}
+      <peer>
+        <address>{{peer.peer_addr}}</address>
+        <remote-as>{{peer.remote_as}}</remote-as>
+        <update-source-interface>lb0</update-source-interface>
+          <address-family>
+            <afi>vpnv4</afi>
+            <safi>unicast</safi>
+            <activate>true</activate>
+          </address-family>		
+          <address-family>
+            <afi>l2vpn</afi>
+            <safi>evpn</safi>
+            <activate>true</activate>
+          </address-family>
+          <address-family>
+            <afi>ipv4</afi>
+            <safi>unicast</safi>
+            <activate>true</activate>
+          </address-family>		
+      </peer>
+{% endif %}
+{% endfor %} 
+    </instance>
+  </bgp>   
+</config>    
+{% endif %}
