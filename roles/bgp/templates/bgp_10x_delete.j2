@@ -1,0 +1,5 @@
+{% if config.bgp is defined %}
+<config>
+  <bgp xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0" nc:operation="remove" xmlns="http://ciena.com/ns/yang/ciena-bgp"/>
+</config>
+{% endif %}
