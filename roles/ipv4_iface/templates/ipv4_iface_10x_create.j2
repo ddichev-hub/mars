@@ -49,7 +49,9 @@
       <mtu>{{item.ip_mtu}}</mtu>
       {% endif %}
       <admin-status xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">true</admin-status>
-      <type xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">ip</type>
+{%if item.if_type is defined %}      
+      <type>{{ item.if_type }}</type>
+{%endif  %}            
       <underlay-binding xmlns="http://ciena.com/ns/yang/ciena-underlay-binding">
         <config>
          <fd>{{item.name}}_{{item.vlan}}</fd>
