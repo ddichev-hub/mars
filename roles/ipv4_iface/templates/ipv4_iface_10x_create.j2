@@ -56,7 +56,14 @@
       <vrfName xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">{{item.vrf}}</vrfName>
     </config>
    </interface>
-
+{%   for port in item.ports %}       
+   <interface>
+    <name> {{ port }}</name>
+    <config>
+      <admin-status xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">true</admin-status>
+    </config>
+  </interface>
+{%   endfor %}      
  </interfaces>  
  <logical-ports xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-mef-logical-port">
 {%   for port in item.ports %}
