@@ -32,7 +32,7 @@
   <fps xmlns="urn:ciena:params:xml:ns:yang:ciena-pn:ciena-mef-fp">  
 {%   for port in item.ports %}
       <fp>
-        <name>{{ item.name  }}_v{{item.vlan}}</name>
+        <name>{{ item.name  }}_{{item.vlan}}</name>
         <fd-name>{{  item.name  }}_{{item.vlan}}</fd-name>
         <logical-port>{{  port  }}</logical-port>
         <classifier-list>v_{{ item.vlan }}</classifier-list>
@@ -42,9 +42,9 @@
   </fps>
   <interfaces xmlns="http://openconfig.net/yang/interfaces">
    <interface>
-     <name>{{item.name}}_v{{item.vlan}}</name>
+     <name>{{item.name}}_{{item.vlan}}</name>
     <config>
-      <name>{{item.name}}_v{{item.vlan}}</name>
+      <name>{{item.name}}_{{item.vlan}}</name>
       <mtu>{{item.ip_mtu}}</mtu>
       <admin-status xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">true</admin-status>
       <type xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">ip</type>
