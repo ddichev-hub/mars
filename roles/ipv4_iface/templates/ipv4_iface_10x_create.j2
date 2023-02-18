@@ -45,7 +45,9 @@
      <name>{{item.name}}_{{item.vlan}}</name>
     <config>
       <name>{{item.name}}_{{item.vlan}}</name>
+      {% if item.ip_mtu is defined %}             
       <mtu>{{item.ip_mtu}}</mtu>
+      {% endif %}
       <admin-status xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">true</admin-status>
       <type xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">ip</type>
       <underlay-binding xmlns="http://ciena.com/ns/yang/ciena-underlay-binding">
@@ -66,11 +68,14 @@
 {%   endfor %}      
  </interfaces>  
  <logical-ports xmlns="urn:ciena:params:xml:ns:yang:ciena-pn::ciena-mef-logical-port">
+
 {%   for port in item.ports %}
+{% if item.port_mtu is defined %}       
   <logical-port>
    <name>{{  port  }}</name>
    <mtu>{{item.port_mtu}}</mtu>
   </logical-port>
+{% endif %}         
 {%   endfor %}    
  </logical-ports>
 </config>
