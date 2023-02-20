@@ -20,7 +20,7 @@
 {% for fp in config.fps %}
 {% if fp.mpls %}
       <interface>
-        <name>{{fp.name}}_v{{fp.vlan}}</name>
+        <name>{{fp.name}}_{{fp.vlan}}</name>
         <label-switching>true</label-switching>
       </interface>
 {% endif %}
