@@ -15,7 +15,7 @@
     - create
     - delete
 
-
+##TODO When deleting ISIS,mpls interfaces has to be deleted as well.
 - name: "{{crud}} isis mpls-te"
   netconf_config:
     content: "{{ lookup ('template', 'isis_mpls_te_{{ saos_os }}_{{crud}}.j2') }}"
