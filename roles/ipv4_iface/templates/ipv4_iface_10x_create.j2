@@ -19,6 +19,9 @@
     <fd>
       <name>{{ item.name }}_{{ item.vlan}}</name>
       <mode>vpls</mode>
+{% if hostvars[inventory_hostname]['ne_type'] is defined %}
+      <vlan-id>{{ item.vlan }}</vlan-id>
+{% endif %}      
 {% if item.vlan != "unt"%}     
       <initiate-l2-transform>
         <vlan-stack>
@@ -26,7 +29,7 @@
           <push-vid>{{ item.vlan }}</push-vid>
         </vlan-stack>
       </initiate-l2-transform>      
-{% endif %}        
+{% endif %} 
     </fd>
   </fds>    
   <fps xmlns="urn:ciena:params:xml:ns:yang:ciena-pn:ciena-mef-fp">  
@@ -50,6 +53,8 @@
 {% endif %}
 {%if item.if_type is defined %}      
       <type xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">{{ item.if_type }}</type>
+{% else %}      
+      <type xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces">ip</type>
 {%endif  %}            
       <underlay-binding xmlns="http://ciena.com/ns/yang/ciena-underlay-binding">
         <config>
