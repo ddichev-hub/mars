@@ -15,9 +15,13 @@
 {% for fp in config.fps %}
 {% if fp.isis %}
         <interface>
-          <name>{{fp.name}}_v{{fp.vlan}}</name>
+          <name>{{fp.name}}_{{fp.vlan}}</name>
           <interface-type>{{fp.isis_if_type}}</interface-type>
+          {% if fp.isis_if_level is defined %}
+          <level-type>{{ fp.isis_if_level }}</level-type>				
+          {% else %}
           <level-type>{{ config.isis.level }}</level-type>				
+          {% endif %}
         </interface>
 {% endif %}
 {% endfor %} 
