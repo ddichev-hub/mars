@@ -1,0 +1,6 @@
+
+{% for iface in config.ifaces %}
+{%if iface.isis == true%}
+isis interface detach ip-interface ip{{iface.port}}_v{{iface.vlan}}
+{%endif%}
+{% endfor %}

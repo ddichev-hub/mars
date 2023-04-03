@@ -1,0 +1,7 @@
+
+{% for iface in config.ifaces %}
+{%if iface.isis == true%}
+isis interface attach ip-interface ip{{iface.port}}_v{{iface.vlan}} isis-instance {{ config.isis.tag }} level {{ iface.isis_if_level }}
+{%endif%}
+{% endfor %}
+
