@@ -1,0 +1,79 @@
+---
+# tasks file for isis
+- name: "TASK: {{crud}} ISIS Instance via CLI"
+  cli_command:
+    command: "{{ lookup('template', 'isis_{{ saos_os }}_instance_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos6x" and (crud == 'create')
+  #run_once: true
+  ignore_errors: yes
+  tags: 
+    - create
+
+
+- name: "TASK: {{crud}} ISIS Interfaces via CLI"
+  cli_command:
+    command: "{{ lookup('template', 'isis_{{ saos_os }}_if_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos6x" and (crud == 'create')
+  #run_once: true
+  ignore_errors: yes
+  tags: 
+    - create
+
+
+###TODO When deleting ISIS,mpls interfaces has to be deleted as well.
+#- name: "{{crud}} isis mpls-te"
+#  netconf_config:
+#    content: "{{ lookup ('template', 'isis_mpls_te_{{ saos_os }}_{{crud}}.j2') }}"
+#    target: running
+#    #backup: yes
+#    format: xml
+#    lock: if-supported
+#    default_operation: merge
+#    error_option: rollback-on-error
+#  register: nc_result
+#  when: ansible_network_os == "saos10x" and (crud == "create" )
+#  tags: 
+#    - create
+
+
+
+#- name: "TASK:Get ipv4 interface"
+#  netconf_rpc:
+#    display: json
+#    rpc: get
+#    content: "{{ lookup('template', './isis_{{saos_os}}_{{crud}}.j2') }}"
+#  register: nc_result
+#  when: ansible_network_os == "saos10x" and crud == "get"
+##  with_items: "{{ hostvars[inventory_hostname]['config']['fps'] }}"  
+#  tags: get
+#  
+#- name: "TASK: Print output"
+#  tags:
+#    - get
+#  debug:
+#    msg: "{{nc_result}}"
+##    msg: "{{ item.output['rpc-reply']['data']['interfaces']['interface']}}"
+##  with_items: "{{ nc_result['results']}}"
+#  when: ansible_network_os == "saos10x" and crud == "get"
+#
+#- name: "TASK:Get ipv4 loopback interface"
+#  netconf_rpc:
+#    display: json
+#    rpc: get
+#    content: "{{ lookup('template', './ipv4_loopback_iface_{{saos_os}}_{{crud}}.j2') }}"
+#  register: nc_result
+#  when: ansible_network_os == "saos10x" and crud == "get"
+##  with_items: "{{ hostvars[inventory_hostname]['config']['fps'] }}"  
+#  tags: get
+#  
+#- name: "TASK: Print output"
+#  tags:
+#    - get
+#  debug:
+#    msg: "{{nc_result}}"
+##    msg: "{{ item.output['rpc-reply']['data']['interfaces']['interface']}}"
+##  with_items: "{{ nc_result['results']}}"
+#  when: ansible_network_os == "saos10x" and crud == "get"
+#  

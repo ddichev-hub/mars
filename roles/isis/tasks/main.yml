@@ -10,6 +10,10 @@
 ## separate Create and Delete in order to have different flow and separate calls for interface and isis instance.
 - include: isis_8x_delete.yml 
   when: (ansible_network_os == "saos8x" and crud == 'delete')  
-#
-#- include: isis_6x.yml 
-#  when: (ansible_network_os == "saos6x")
+
+#SAOS 6x
+- include: isis_6x_create.yml 
+  when: (ansible_network_os == "saos6x" and crud == 'create')
+
+- include: isis_6x_delete.yml 
+  when: (ansible_network_os == "saos6x" and crud == 'delete')
