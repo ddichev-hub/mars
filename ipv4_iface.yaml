@@ -11,6 +11,7 @@
   #  - debug: 
   #      msg: "{{hostvars[inventory_hostname]}}"
   #    tags: debug
+  # TBD: when doing delete, remove interface from mpls
       
     - name: Set 8x OS variables
       set_fact:
