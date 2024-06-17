@@ -1,0 +1,45 @@
+# to execute 
+# ansible-playbook -i inventory/inventory_file mgmt-vrf.yaml -t create --skip-tags debug
+# ansible-playbook -i inventory/inventory_file mgmt-vrf.yaml -t delete --skip-tags debug
+# ansible-playbook -i inventory/inventory_file mgmt-vrf.yaml -t get  --skip-tags debug
+
+##TODO Check if the 10x has to be with mng-vrf
+##TODO Set management-domain - device will reboot
+##TODO Check if management-domain is set
+##TODO Create mng vrf for devices with mng-vrf flag set to true
+##TODO Create VRF route for management
+##TODO Move interfaces in MGMT VRF
+
+- hosts: devices
+  gather_facts: no
+
+  tasks:
+  #  - debug: 
+  #      msg: "{{hostvars[inventory_hostname]}}"
+  #    tags: debug
+      
+    - name: Set 10x OS variables
+      set_fact:
+        ansible_network_os: "saos10x" 
+        saos_os: "10x"
+        ansible_connection: "netconf"
+      when: "'devices_10x' in hostvars[inventory_hostname]['group_names']"
+      tags: always      
+
+    - name: Set create action variables    
+      set_fact:
+        crud: create
+      tags: create
+
+    - name: Set get action variables    
+      set_fact:
+        crud: get
+      tags: get
+
+    - name: Set delete action variables    
+      set_fact:
+        crud: delete
+      tags: delete
+
+    - import_role:
+        name: mgmt-vrf
