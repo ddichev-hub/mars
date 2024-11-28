@@ -13,7 +13,7 @@
   #    tags: debug
       
     - name: Set 8x OS variables
-      set_fact:
+      ansible.builtin.set_fact:
         ansible_network_os: "saos8x" 
         saos_os: "8x"
         ansible_connection: "network_cli"
@@ -21,7 +21,7 @@
       tags: always
 
     - name: Set 6x OS variables
-      set_fact:
+      ansible.builtin.set_fact:
         ansible_network_os: "saos6x" 
         saos_os: "6x"
         ansible_connection: "network_cli"
@@ -29,7 +29,7 @@
       tags: always
 
     - name: Set 10x OS variables
-      set_fact:
+      ansible.builtin.set_fact:
         ansible_network_os: "saos10x" 
         saos_os: "10x"
         ansible_connection: "netconf"
@@ -37,19 +37,20 @@
       tags: always      
 
     - name: Set create action variables    
-      set_fact:
+      ansible.builtin.set_fact:
         crud: create
       tags: create
 
     - name: Set get action variables    
-      set_fact:
+      ansible.builtin.set_fact:
         crud: get
       tags: get
 
     - name: Set delete action variables    
-      set_fact:
+      ansible.builtin.set_fact:
         crud: delete
       tags: delete
 
-    - import_role:
+    - name: Import Role
+      ansible.builtin.import_role:
         name: banner

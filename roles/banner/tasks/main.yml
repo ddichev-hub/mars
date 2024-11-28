@@ -1,12 +1,12 @@
 ---
 # tasks file for banner
-- include: banner_10x.yml 
+- ansible.builtin.include_tasks: banner_10x.yml 
   when: (ansible_network_os == "saos10x") 
 
-- include: banner_8x.yml 
+- ansible.builtin.include_tasks: banner_8x.yml 
   when: (ansible_network_os == "saos8x")
 
-- include: banner_6x.yml 
+- ansible.builtin.include_tasks: banner_6x.yml 
   when: (ansible_network_os == "saos6x")
   
 #- include: banner_{{saos_os}}_get.yml

@@ -1,6 +1,6 @@
 ---
 - name: "TASK: {{crud}} banner"
-  netconf_config:
+  ansible.netcommon.netconf_config:
     content: "{{ lookup('template', './banner_{{ saos_os }}_{{crud}}.j2') }}"
     target: running
     #backup: yes
@@ -19,12 +19,12 @@
     - debug
     - create
     - delete
-  debug:
+  ansible.builtin.debug:
     msg: "{{ nc_result }}"
   when: ansible_network_os == "saos10x" and (crud == 'create' or crud == 'delete')
 
 - name: "TASK:Get banner"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: get
     content: "{{ lookup('template', './banner_{{saos_os}}_{{crud}}.j2') }}"
@@ -36,6 +36,6 @@
   tags:
     - debug
     - get
-  debug:
+  ansible.builtin.debug:
     msg: "{{ nc_result.stdout_lines }}"
   when: ansible_network_os == "saos10x" and crud == "get"
