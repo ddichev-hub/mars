@@ -54,3 +54,4 @@
     - name: Import Role
       ansible.builtin.import_role:
         name: banner
+      tags: always
