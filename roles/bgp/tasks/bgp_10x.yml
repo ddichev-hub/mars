@@ -1,7 +1,7 @@
 ---
 # tasks file for bgp
 - name: "{{crud}} bgp instance"
-  netconf_config:
+  ansible.netcommon.netconf_config:
     content: "{{ lookup ('template', 'bgp_{{ saos_os }}_{{crud}}.j2') }}"
     target: running
     #backup: yes
@@ -16,7 +16,7 @@
     - delete
 
 - name: "TASK:Get BGP"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: get
     content: "{{ lookup('template', './bgp_{{saos_os}}_{{crud}}.j2') }}"

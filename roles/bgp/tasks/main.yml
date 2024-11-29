@@ -1,6 +1,6 @@
 ---
 # tasks file for bgp
-- include: bgp_10x.yml 
+- ansible.builtin.include_tasks: bgp_10x.yml 
   when: (ansible_network_os == "saos10x") 
 
 #- include: bgp_8x.yml 
