@@ -1,6 +1,6 @@
 ---
 - name: "TASK: {{crud}} loopback"
-  netconf_config:
+  ansible.netcommon.netconf_config:
     content: "{{ lookup('template', './ipv4_loopback_iface_{{ saos_os }}_{{crud}}.j2') }}"
     target: running
     #backup: yes
@@ -17,7 +17,7 @@
     - delete
 
 - name: "TASK: {{crud}} ipv4 interface"
-  netconf_config:
+  ansible.netcommon.netconf_config:
     content: "{{ lookup('template', './ipv4_iface_{{ saos_os }}_{{crud}}.j2') }}"
     target: running
     #backup: yes
@@ -34,7 +34,7 @@
     - delete
 
 - name: "TASK: {{crud}} vlan classifier"
-  netconf_config:
+  ansible.netcommon.netconf_config:
     content: "{{ lookup('template', './ipv4_iface_classifier_{{ saos_os }}_{{crud}}.j2') }}"
     target: running
     #backup: yes
@@ -50,7 +50,7 @@
     - delete
 
 - name: "TASK: {{crud}} ipv4 address"
-  netconf_config:
+  ansible.netcommon.netconf_config:
     content: "{{ lookup('template', './ipv4_iface_addr_{{ saos_os }}_{{crud}}.j2') }}"
     target: running
     #backup: yes
@@ -66,7 +66,7 @@
     - create   
 
 - name: "TASK: {{crud}} ipv4 loopback address"
-  netconf_config:
+  ansible.netcommon.netconf_config:
     content: "{{ lookup('template', './ipv4_loopback_iface_addr_{{ saos_os }}_{{crud}}.j2') }}"
     target: running
     #backup: yes
@@ -97,7 +97,7 @@
 
 
 - name: "TASK:Get ipv4 interface"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: get
     content: "{{ lookup('template', './ipv4_iface_{{saos_os}}_{{crud}}.j2') }}"
@@ -116,7 +116,7 @@
   when: ansible_network_os == "saos10x" and crud == "get"
 
 - name: "TASK:Get ipv4 loopback interface"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: get
     content: "{{ lookup('template', './ipv4_loopback_iface_{{saos_os}}_{{crud}}.j2') }}"
