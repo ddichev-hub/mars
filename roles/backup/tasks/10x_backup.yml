@@ -1,7 +1,7 @@
 ---
 
 - name: "{{crud}} backup"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: backup
     xmlns: "http://yumaworks.com/ns/yumaworks-system"
@@ -13,7 +13,7 @@
    - local
 
 - name: "delete backup"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: delete-backup
     xmlns: "http://yumaworks.com/ns/yumaworks-system"
@@ -32,7 +32,7 @@
   when: ansible_network_os == "saos10x" and (crud == 'create' or crud == 'delete')
 
 - name: "Upload config backup to a server"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: transfer-config
     xmlns: "http://www.ciena.com/ns/yang/ciena-packet-configuration"

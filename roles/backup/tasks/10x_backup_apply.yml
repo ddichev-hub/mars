@@ -1,6 +1,6 @@
 ---
 - name: "Download configuration file from a server"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: transfer-config
     xmlns: "http://www.ciena.com/ns/yang/ciena-packet-configuration"
@@ -11,7 +11,7 @@
   - remote
 
 - name: "Initiate RTUC "
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: reset-to-user-config
     xmlns: "http://www.ciena.com/ns/yang/ciena-system"
@@ -47,7 +47,7 @@
     - wait
     - local
     - remote
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: get
     content: "{{ lookup('template', './{{ saos_os }}_rtuc_get_status.j2') }}"

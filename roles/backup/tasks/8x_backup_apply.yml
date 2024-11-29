@@ -1,6 +1,6 @@
 ---
 - name: "Download configuration file from a server"
-  cli_command:
+  ansible.netcommon.cli_command:
     command: "{{ lookup('template', './{{ saos_os }}_backup_download.j2') }}"
   register: cli_result
   when: ansible_network_os == "saos8x" and crud == 'apply'
@@ -8,7 +8,7 @@
   - remote
 
 - name: "Initiate RTUC "
-  cli_command:
+  ansible.netcommon.cli_command:
     command: "{{ lookup('template', './{{ saos_os }}_backup_restore.j2') }}"
   register: cli_result
   when: ansible_network_os == "saos8x" and crud == 'apply'
@@ -49,7 +49,7 @@
     - wait
     - local
     - remote
-  cli_command:
+  ansible.netcommon.cli_command:
     command: "{{ lookup('template', './{{ saos_os }}_rtuc_get_status.j2') }}"
   register: cli_result
   until: 
