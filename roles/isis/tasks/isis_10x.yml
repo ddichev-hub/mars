@@ -1,7 +1,7 @@
 ---
 # tasks file for isis
 - name: "{{crud}} isis instance"
-  netconf_config:
+  ansible.netcommon.netconf_config:
     content: "{{ lookup ('template', 'isis_{{ saos_os }}_{{crud}}.j2') }}"
     target: running
     #backup: yes
@@ -9,6 +9,7 @@
     lock: if-supported
     default_operation: merge
     error_option: rollback-on-error
+    commit: false
   register: nc_result
   when: ansible_network_os == "saos10x" and (crud == "create" or crud == "delete")
   tags: 
@@ -17,7 +18,7 @@
 
 ##TODO When deleting ISIS,mpls interfaces has to be deleted as well.
 - name: "{{crud}} isis mpls-te"
-  netconf_config:
+  ansible.netcommon.netconf_config:
     content: "{{ lookup ('template', 'isis_mpls_te_{{ saos_os }}_{{crud}}.j2') }}"
     target: running
     #backup: yes
@@ -31,7 +32,7 @@
     - create
 
 - name: "isis sr enable"
-  netconf_config:
+  ansible.netcommon.netconf_config:
     content: "{{ lookup ('template', 'isis_sr_{{ saos_os }}_enable.j2') }}"
     target: running
     #backup: yes
@@ -45,7 +46,7 @@
     - create  
   
 - name: "{{crud}} sr"
-  netconf_config:
+  ansible.netcommon.netconf_config:
     content: "{{ lookup ('template', 'isis_sr_{{ saos_os }}_{{crud}}.j2') }}"
     target: running
     #backup: yes

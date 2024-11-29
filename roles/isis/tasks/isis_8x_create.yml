@@ -1,7 +1,7 @@
 ---
 # tasks file for isis
 - name: "TASK: {{crud}} ISIS Instance via CLI"
-  cli_command:
+  ansible.netcommon.cli_command:
     command: "{{ lookup('template', 'isis_{{ saos_os }}_instance_{{crud}}.j2') }}"
   register: cli_result
   when: ansible_network_os == "saos8x" and (crud == 'create')
@@ -12,7 +12,7 @@
 
 
 - name: "TASK: {{crud}} ISIS Interfaces via CLI"
-  cli_command:
+  ansible.netcommon.cli_command:
     command: "{{ lookup('template', 'isis_{{ saos_os }}_if_{{crud}}.j2') }}"
   register: cli_result
   when: ansible_network_os == "saos8x" and (crud == 'create')

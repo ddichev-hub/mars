@@ -1,19 +1,20 @@
 ---
 # tasks file for isis
-- include: isis_10x.yml 
+
+- ansible.builtin.include_tasks: isis_10x.yml 
   when: (ansible_network_os == "saos10x") 
 
 ## separate Create and Delete in order to have different flow and separate calls for interface and isis instance.
-- include: isis_8x_create.yml 
+- ansible.builtin.include_tasks: isis_8x_create.yml 
   when: (ansible_network_os == "saos8x" and crud == 'create')
 
 ## separate Create and Delete in order to have different flow and separate calls for interface and isis instance.
-- include: isis_8x_delete.yml 
+- ansible.builtin.include_tasks: isis_8x_delete.yml 
   when: (ansible_network_os == "saos8x" and crud == 'delete')  
 
 #SAOS 6x
-- include: isis_6x_create.yml 
+- ansible.builtin.include_tasks: isis_6x_create.yml 
   when: (ansible_network_os == "saos6x" and crud == 'create')
 
-- include: isis_6x_delete.yml 
+- ansible.builtin.include_tasks: isis_6x_delete.yml 
   when: (ansible_network_os == "saos6x" and crud == 'delete')
