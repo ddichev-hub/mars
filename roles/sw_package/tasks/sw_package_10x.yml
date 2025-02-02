@@ -1,6 +1,6 @@
 ---
 - name: "TASK: {{crud}} sw_package"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: software-remove
     xmlns: "http://www.ciena.com/ns/yang/ciena-software-mgmt"
@@ -11,7 +11,7 @@
    - delete
 
 - name: "TASK: {{crud}} sw_package"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: software-install
     xmlns: "http://www.ciena.com/ns/yang/ciena-software-mgmt"
@@ -22,7 +22,7 @@
    - install
 
 - name: "TASK: {{crud}} sw_package"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: software-activate
     xmlns: "http://www.ciena.com/ns/yang/ciena-software-mgmt"
@@ -42,7 +42,7 @@
   when: ansible_network_os == "saos10x" and (crud == 'install' or crud == 'delete')
 
 - name: "TASK:Get sw package"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: get
     content: "{{ lookup('template', './sw_package_{{saos_os}}_{{crud}}.j2') }}"
