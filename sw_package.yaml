@@ -62,5 +62,7 @@
         crud: delete
       tags: delete
 
-    - import_role:
+    - name: Import Role
+      ansible.builtin.import_role:
         name: sw_package
+      tags: always
