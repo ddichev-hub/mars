@@ -1,7 +1,7 @@
 ---
 # tasks file for users
 - name: "{{crud}} users "
-  netconf_config:
+  ansible.netcommon.netconf_config:
     content: "{{ lookup ('template', 'users_{{ saos_os }}_{{crud}}.j2') }}"
     target: running
     #backup: yes
@@ -16,7 +16,7 @@
     - delete
 
 - name: "TASK:Get users"
-  netconf_rpc:
+  ansible.netcommon.netconf_rpc:
     display: json
     rpc: get
     content: "{{ lookup('template', './users_{{saos_os}}_{{crud}}.j2') }}"
@@ -35,7 +35,7 @@
   when: ansible_network_os == "saos10x" and crud == "get"
 
 #- name: "{{crud}} isis mpls-te"
-#  netconf_config:
+#  ansible.netcommon.netconf_config:
 #    content: "{{ lookup ('template', 'isis_mpls_te_{{ saos_os }}_{{crud}}.j2') }}"
 #    target: running
 #    #backup: yes
@@ -49,7 +49,7 @@
 #    - create
 #
 #- name: "isis sr enable"
-#  netconf_config:
+#  ansible.netcommon.netconf_config:
 #    content: "{{ lookup ('template', 'isis_sr_{{ saos_os }}_enable.j2') }}"
 #    target: running
 #    #backup: yes
@@ -63,7 +63,7 @@
 #    - create  
 #  
 #- name: "{{crud}} sr"
-#  netconf_config:
+#  ansible.netcommon.netconf_config:
 #    content: "{{ lookup ('template', 'isis_sr_{{ saos_os }}_{{crud}}.j2') }}"
 #    target: running
 #    #backup: yes
@@ -83,7 +83,7 @@
 
 #
 #- name: "TASK:Get ipv4 loopback interface"
-#  netconf_rpc:
+#  ansible.netcommon.netconf_rpc:
 #    display: json
 #    rpc: get
 #    content: "{{ lookup('template', './ipv4_loopback_iface_{{saos_os}}_{{crud}}.j2') }}"
