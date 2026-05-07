@@ -1,0 +1,4 @@
+---
+# tasks file for ettps
+- ansible.builtin.include_tasks: ettps_10x.yml 
+  when: (ansible_network_os == "saos10x") 

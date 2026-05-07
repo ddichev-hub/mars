@@ -1,0 +1,15 @@
+{% if hostvars[inventory_hostname]['config']['ettps'] is defined %}
+<filter type="subtree">
+  <interfaces xmlns="http://openconfig.net/yang/interfaces">
+{% for ettp in hostvars[inventory_hostname]['config']['ettps'] %}
+    <interface>
+      <name>{{ettp.name}}</name>
+      <config>
+        <type xmlns="http://ciena.com/ns/yang/ciena-openconfig-interfaces"/>
+        <port-speed xmlns="http://ciena.com/ns/yang/ciena-openconfig-if-ethernet-port"/>
+      </config> 
+    </interface>
+{% endfor %}
+  </interfaces>
+</filter>
+{% endif %}
