@@ -1,0 +1,14 @@
+---
+# tasks file for l3_int_lb_ipv4
+- ansible.builtin.include_tasks: l3_int_lb_ipv4_10x.yml 
+  when: (ansible_network_os == "saos10x") 
+
+- ansible.builtin.include_tasks: l3_int_lb_ipv4_8x.yml 
+  when: (ansible_network_os == "saos8x")
+
+- ansible.builtin.include_tasks: l3_int_lb_ipv4_6x.yml 
+  when: (ansible_network_os == "saos6x")
+  
+#- include: banner_{{saos_os}}_get.yml
+#  when: (ansible_network_os == "saos10x") and (crud == "get")
+

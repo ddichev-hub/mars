@@ -1,0 +1,69 @@
+---
+- name: "TASK: {{crud}} loopback"
+  ansible.netcommon.netconf_config:
+    content: "{{ lookup('template', './l3_int_lb_ipv4_{{ saos_os }}_{{crud}}.j2') }}"
+    target: running
+    #backup: yes
+    format: xml
+    lock: if-supported
+    default_operation: merge
+    error_option: continue-on-error
+  register: nc_result
+  when: ansible_network_os == "saos10x" and (crud == 'create' or crud == 'delete')
+  run_once: true
+  ignore_errors: yes
+  tags: 
+    - create
+    - delete
+
+
+- name: "TASK: {{crud}} ipv4 loopback address"
+  ansible.netcommon.netconf_config:
+    content: "{{ lookup('template', './l3_int_lb_ipv4_addr_{{ saos_os }}_{{crud}}.j2') }}"
+    target: running
+    #backup: yes
+    format: xml
+    lock: if-supported
+    default_operation: merge
+    error_option: rollback-on-error
+  register: nc_result
+  when: ansible_network_os == "saos10x" and (crud ==  'create')
+  run_once: true
+  tags: 
+    - create   
+      
+- name: "TASK: Print output"
+  tags:
+    - debug
+    - create
+    - delete
+  debug:
+    msg: "{{ nc_result }}"
+  when: ansible_network_os == "saos10x" and (crud == 'create' or crud == 'delete')
+
+- name: "TASK: Print some debug:"
+  tags: 
+    - debug
+  debug: 
+    msg: "{{ hostvars[inventory_hostname]['config']['fps'] }}"
+
+
+- name: "TASK:Get ipv4 loopback interface"
+  ansible.netcommon.netconf_rpc:
+    display: json
+    rpc: get
+    content: "{{ lookup('template', './l3_int_lb_ipv4_{{saos_os}}_{{crud}}.j2') }}"
+  register: nc_result
+  when: ansible_network_os == "saos10x" and crud == "get"
+#  with_items: "{{ hostvars[inventory_hostname]['config']['fps'] }}"  
+  tags: get
+  
+- name: "TASK: Print output"
+  tags:
+    - get
+  debug:
+    msg: "{{nc_result}}"
+#    msg: "{{ item.output['rpc-reply']['data']['interfaces']['interface']}}"
+#  with_items: "{{ nc_result['results']}}"
+  when: ansible_network_os == "saos10x" and crud == "get"
+  
