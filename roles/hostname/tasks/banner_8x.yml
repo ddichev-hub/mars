@@ -1,0 +1,21 @@
+---
+- name: "TASK: {{crud}} Banner via CLI"
+  ansible.netcommon.cli_command:
+    command: "{{ lookup('template', './banner_{{saos_os}}_{{crud}}.j2') }}"
+  register: cli_result
+  when: ansible_network_os == "saos8x"
+  tags: 
+    - get
+    - create
+    - delete
+  
+- name: "TASK: Print output"
+  tags:
+    - debug
+    - get
+    - create
+    - delete       
+  ansible.builtin.debug:
+    msg: "{{ cli_result }}"
+  when: ansible_network_os == "saos8x"
+  
