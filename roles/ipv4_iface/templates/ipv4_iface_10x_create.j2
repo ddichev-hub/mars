@@ -22,7 +22,7 @@
 {% if hostvars[inventory_hostname]['ne_type'] is defined %}
       <vlan-id>{{ item.vlan }}</vlan-id>
 {% endif %}      
-{% if item.vlan != "unt"%}     
+{% if item.vlan != "unt" and hostvars[inventory_hostname]['ne_type'] is not defined %}     
       <initiate-l2-transform>
         <vlan-stack>
           <tag>1</tag>
