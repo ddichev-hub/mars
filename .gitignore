@@ -130,3 +130,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#.sh scripts that starts with string "TEMP"
+TEMP*.sh
