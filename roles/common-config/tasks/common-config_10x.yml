@@ -1,0 +1,41 @@
+---
+- name: "TASK: {{crud}} CFM MD"
+  ansible.netcommon.netconf_config:
+    content: "{{ lookup('template', './cfm_md_{{ saos_os }}_{{crud}}.j2') }}"
+    target: running
+    #backup: yes
+    format: xml
+    lock: if-supported
+    default_operation: merge
+    error_option: rollback-on-error
+  register: nc_result
+  when: ansible_network_os == "saos10x" and (crud == 'set' or crud == 'delete')
+  tags: 
+    - set
+    - delete
+
+- name: "TASK: Print output"
+  tags:
+    - debug
+    - set
+    - delete
+  ansible.builtin.debug:
+    msg: "{{ nc_result }}"
+  when: ansible_network_os == "saos10x" and (crud == 'set' or crud == 'delete')
+
+- name: "TASK:Get location"
+  ansible.netcommon.netconf_rpc:
+    display: json
+    rpc: get
+    content: "{{ lookup('template', './cfm_md_{{saos_os}}_{{crud}}.j2') }}"
+  register: nc_result
+  when: ansible_network_os == "saos10x" and crud == "get"
+  tags: get
+  
+- name: "TASK: Print output"
+  tags:
+    - debug
+    - get
+  ansible.builtin.debug:
+    msg: "{{ nc_result.stdout_lines }}"
+  when: ansible_network_os == "saos10x" and crud == "get"

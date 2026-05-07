@@ -1,0 +1,59 @@
+# to execute 
+# ansible-playbook -i inventory/inventory_file common-config.yaml -t set --skip-tags debug
+# ansible-playbook -i inventory/inventory_file common-config.yaml -t delete --skip-tags debug
+# ansible-playbook -i inventory/inventory_file common-config.yaml -t get  --skip-tags debug
+
+##TODO Add support for SAOS 6x where applicable
+##TODO Add support for more options in BGP
+
+- hosts: devices
+  gather_facts: no
+
+  tasks:
+  #  - debug: 
+  #      msg: "{{hostvars[inventory_hostname]}}"
+  #    tags: debug
+      
+    - name: Set 8x OS variables
+      set_fact:
+        ansible_network_os: "saos8x" 
+        saos_os: "8x"
+        ansible_connection: "network_cli"
+      when: "'devices_8x' in hostvars[inventory_hostname]['group_names']"
+      tags: always
+
+    - name: Set 6x OS variables
+      set_fact:
+        ansible_network_os: "saos6x" 
+        saos_os: "6x"
+        ansible_connection: "network_cli"
+      when: "'devices_6x' in hostvars[inventory_hostname]['group_names']"
+      tags: always
+
+    - name: Set 10x OS variables
+      set_fact:
+        ansible_network_os: "saos10x" 
+        saos_os: "10x"
+        ansible_connection: "netconf"
+      when: "'devices_10x' in hostvars[inventory_hostname]['group_names']"
+      tags: always      
+
+    - name: Set update action variables    
+      set_fact:
+        crud: set
+      tags: set
+
+    - name: Set get action variables    
+      set_fact:
+        crud: get
+      tags: get
+
+    - name: Set delete action variables    
+      set_fact:
+        crud: delete
+      tags: delete
+
+    - name: Import Role
+      ansible.builtin.import_role:
+        name: common-config
+      tags: always
