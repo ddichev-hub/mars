@@ -1,0 +1,14 @@
+---
+# tasks file for banner
+- ansible.builtin.include_tasks: location_10x.yml 
+  when: (ansible_network_os == "saos10x") 
+
+#- ansible.builtin.include_tasks: hostname_8x.yml 
+#  when: (ansible_network_os == "saos8x")
+
+#- ansible.builtin.include_tasks: hostname_6x.yml 
+#  when: (ansible_network_os == "saos6x")
+  
+#- include: banner_{{saos_os}}_get.yml
+#  when: (ansible_network_os == "saos10x") and (crud == "get")
+
